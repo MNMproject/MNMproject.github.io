@@ -69,31 +69,138 @@
 
     
     <script>
-       let sudokuMassive = createSudokuMassive();
-function createMassive(){
-    let arr = [];
-    for (let i = 0; i < 9; i++) {
-        arr[i] = [1,2,3,4,5,6,7,8,9].sort(function () { 
-            return Math.random() - 0.5; });
+       class Sudoku {
+    constructor(size, difficulty) {
+        this.size = size;
+        this.difficulty = difficulty;
+        const SRNd = Math.sqrt(size);
+        this.SRN = Math.floor(SRNd);
+        this.sudokuVassive = Array.from({length: size}, () => Array.from({length: size}, () => 0));
     }
-    return arr;
-}
 
-function createSudokuMassive(){
-    let arr = createMassive();
-    for (let i = 1; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-            if(arr[i][j] == arr[i-1][j]){
-                
+    fillValues() {
+        this.fillDiagonal();
+        this.fillRemaining(0, this.SRN);
+        this.removeKDigits();
+    }
+
+    fillDiagonal() {
+        for (let i = 0; i < this.size; i += this.SRN) {
+            this.fillBox(i, i);
+        }
+    }
+
+    unUsedInBox(rowStart, colStart, num) {
+        for (let i = 0; i < this.SRN; i++) {
+            for (let j = 0; j < this.SRN; j++) {
+                if (this.sudokuVassive[rowStart + i][colStart + j] === num) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    fillBox(row, col) {
+        let num = 0;
+        for (let i = 0; i < this.SRN; i++) {
+            for (let j = 0; j < this.SRN; j++) {
+                while (true) {
+                    num = this.randomGenerator(this.size);
+                    if (this.unUsedInBox(row, col, num)) {
+                        break;
+                    }
+                }
+                this.sudokuVassive[row + i][col + j] = num;
             }
         }
     }
-    return arr;
+
+    randomGenerator(num) {
+        return Math.floor(Math.random() * num + 1);
+    }
+
+    checkIfSafe(i, j, num) {
+        return (
+            this.unUsedInRow(i, num) &&
+            this.unUsedInCol(j, num) &&
+            this.unUsedInBox(i - (i % this.SRN), j - (j % this.SRN), num)
+        );
+    }
+
+    unUsedInRow(i, num) {
+        for (let j = 0; j < this.size; j++) {
+            if (this.sudokuVassive[i][j] === num) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    unUsedInCol(j, num) {
+        for (let i = 0; i < this.size; i++) {
+            if (this.sudokuVassive[i][j] === num) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    fillRemaining(i, j) {
+        if (i === this.size - 1 && j === this.size) {
+            return true;
+        }
+
+        if (j === this.size) {
+            i += 1;
+            j = 0;
+        }
+
+        if (this.sudokuVassive[i][j] !== 0) {
+            return this.fillRemaining(i, j + 1);
+        }
+
+        for (let num = 1; num <= this.size; num++) {
+            if (this.checkIfSafe(i, j, num)) {
+                this.sudokuVassive[i][j] = num;
+                if (this.fillRemaining(i, j + 1)) {
+                    return true;
+                }
+                this.sudokuVassive[i][j] = 0;
+            }
+        }
+        return false;
+    }
+
+    removeKDigits() {
+        let count = this.difficulty;
+        while (count !== 0) {
+            let i = Math.floor(Math.random() * this.size);
+            let j = Math.floor(Math.random() * this.size);
+            if (this.sudokuVassive[i][j] !== 0) {
+                count--;
+                this.sudokuVassive[i][j] = 0;
+            }
+        }
+        return;
+    }
+
+    getMas(parametr){
+        parametr.fillValues();
+        return this.sudokuVassive;
+    }
 }
 
-sudoku(9, sudokuMassive);
 
-function sudoku(params, sudokuMas) {
+
+let size = 9;
+let difficulty = 10;
+let sudoku = new Sudoku(size, difficulty);
+
+let sudokuMassive = sudoku.getMas(sudoku);
+sudokuM(9, sudokuMassive);
+
+function sudokuM(params, sudokuMas) {
     container.innerHTML = '';
     for (i = 0; i < params; i++){
         const rowElement = document.createElement('div');
