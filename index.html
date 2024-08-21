@@ -209,10 +209,8 @@
     let tempCell;
     let mistake = false;
     sudoku.getMas(sudoku);
-    //sudokuM(9, sudokuMassive);
     sudokuCreater(sudoku.sudokuMassive);
     createNumberBlock()
-    //sudokuCreaterAnswer(sudoku.sudokuAnswerMassive);
 
     function sudokuM(params, sudokuMas) {
         container.innerHTML = '';
@@ -272,29 +270,6 @@
 
     }
 
-    /*function sudokuCreaterAnswer(sudokuMas) {
-        container2.innerHTML = '';
-        sudokuMas.forEach((row, rowIndex) => {
-            const rowElement = document.createElement('div');
-            if (rowIndex == 3 || rowIndex == 6) {
-                rowElement.classList.add('row_2');
-            } else {
-                rowElement.classList.add('row');
-            }
-            row.forEach((cell, columnIndex) => {
-                const cellElement = document.createElement('input');
-                if (columnIndex == 3 || columnIndex == 6) {
-                    cellElement.classList.add('cell_2');
-                } else {
-                    cellElement.classList.add('cell');
-                }
-                cellElement.value = cell !== 0 ? cell : '';
-                rowElement.appendChild(cellElement);
-            });
-            container.appendChild(rowElement);
-        });
-    }*/
-
     document.addEventListener("click", function (e) {
 
         if (mistake) {
@@ -302,7 +277,6 @@
             mistake = false;
         }
         if (e.target.className == "cell" || e.target.className == "cell_2") {
-           // e.target.style.backgroundColor = '#EE82EE';
             if (tempCell != null && e.target != tempCell) { tempCell.style.backgroundColor = 'white'; }
             tempCell = e.target;
             checkNumberForMatch(tempCell);
@@ -327,7 +301,6 @@
     }
 
     function checkNumberForMatch(params) {
-        //if (params != "") {
             sudoku.sudokuMassive.forEach((row, rowIndex) => {
                 row.forEach((cell, columnIndex) => {
                     document.getElementById(rowIndex + "" + columnIndex).style.backgroundColor = 'white';
@@ -336,7 +309,6 @@
                     }else if (params.textContent == "") {document.getElementById(params.getAttribute("ID_Cell")[0] + "" + params.getAttribute("ID_Cell")[1]).style.backgroundColor = '#EE82EE';}
                 });
             });
-       // }
     }
 
 
