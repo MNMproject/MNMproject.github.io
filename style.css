@@ -4,11 +4,15 @@
     justify-content: flex-start;
 }
 
-.container {
-    display: flex;
+.containerBlock {
+    display: block; 
+}
+
+.containerSudoku {
+    display: inline-flex;
     flex-direction: column;
-    align-items: start;
     margin-top: 20px;
+    border: 5px solid black;
 }
 
 .row {
@@ -55,10 +59,10 @@
 
 .cell_number_top {
     width: 30px;
-    height: 30px;
+    height: 20px;
     border: 1px solid black;
     text-align: center;
-    line-height: 30px;
+    line-height: 20px;
     box-sizing: border-box;
     font-size: 10px;
     font-weight: 600;
@@ -75,4 +79,11 @@
     font-size: 25px;
     font-weight: 700;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: var(--color-for-slect);
+}
+
+:root{
+    --color-for-slect:#EE82EE;
+    --color-mistake: red;
+    --color-main-cell: white;
 }
