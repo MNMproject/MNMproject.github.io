@@ -132,6 +132,7 @@ let mistake = false;
 let mistakeCount;
 let maxMistake;
 let masQuantityAllNumbers;
+let checkWinner;
 
 function checkCustomDifficulty() {
     difficulty = document.getElementById("customDifficulty").value;
@@ -142,6 +143,7 @@ function clickStartGame() {
     masQuantityAllNumbers = [9, 9, 9, 9, 9, 9, 9, 9, 9];
     mistakeCount = 0;
     maxMistake = 3;
+    checkWinner = 0
     sudoku = new Sudoku(size, difficulty);
     while (document.getElementById("containerSudoku").firstChild) {
         document.getElementById("containerSudoku").removeChild(document.getElementById("containerSudoku").firstChild);
@@ -209,6 +211,7 @@ function createNumberBlock() {
             element.prepend(topElement);
             element.append(bottomElement);
             blockNumber.append(element);
+            checkWinner++;
         }
     }
 }
@@ -244,7 +247,8 @@ function checkCorrectAnswer(params) {
         document.getElementById("cell_number_top" + params.textContent).textContent = masQuantityAllNumbers[params.textContent - 1] - 1;
         masQuantityAllNumbers[params.textContent - 1] = masQuantityAllNumbers[params.textContent - 1] - 1;
         if (masQuantityAllNumbers[params.textContent - 1] == 0) {
-            document.getElementById("cell_number_block" + params.textContent).style.display = 'none';;
+            document.getElementById("cell_number_block" + params.textContent).style.display = 'none';
+            checkWinner--;
         }
         checkNumberForMatch(params);
         if(checkAllFillHorizontal(params) == size){
@@ -252,6 +256,10 @@ function checkCorrectAnswer(params) {
         }
         if(checkAllFillVertical(params) == size){
             successIlluminationVertical(params);
+        }
+        if(checkWinner == 0){
+            alert("Судоку собран. Поздравляю!");
+            //document.getElementById("containerSudoku").style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect');
         }
         return false;
     }
