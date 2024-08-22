@@ -123,6 +123,7 @@ class Sudoku {
     }
 }
 
+const rootStyles = getComputedStyle(document.querySelector(':root'));
 let size = 9;
 let difficulty = 10;
 let sudoku;
@@ -142,8 +143,8 @@ function clickStartGame() {
     mistakeCount = 0;
     maxMistake = 3;
     sudoku = new Sudoku(size, difficulty);
-    while (document.getElementById("container").firstChild) {
-        document.getElementById("container").removeChild(document.getElementById("container").firstChild);
+    while (document.getElementById("containerSudoku").firstChild) {
+        document.getElementById("containerSudoku").removeChild(document.getElementById("containerSudoku").firstChild);
     }
     while (document.getElementById("blockNumber").firstChild) {
         document.getElementById("blockNumber").removeChild(document.getElementById("blockNumber").firstChild);
@@ -153,32 +154,10 @@ function clickStartGame() {
     document.getElementById("showMaxMistakeCount").textContent = maxMistake;
     sudoku.getMas(sudoku);
     getQuantityAllNumbers();
+    document.getElementById("subokuBlock").style.display = 'block';
     sudokuCreater(sudoku.sudokuMassive);
     createNumberBlock()
 }
-
-/*function sudokuM(params, sudokuMas) {
-    container.innerHTML = '';
-    for (i = 0; i < params; i++) {
-        const rowElement = document.createElement('div');
-        if (i == 3 || i == 6) {
-            rowElement.classList.add('row_2');
-        } else {
-            rowElement.classList.add('row');
-        }
-        for (j = 0; j < params; j++) {
-            const cellElement = document.createElement('input');
-            if (j == 3 || j == 6) {
-                cellElement.classList.add('cell_2');
-            } else {
-                cellElement.classList.add('cell');
-            }
-            cellElement.value = sudokuMas[i][j] !== 0 ? sudokuMas[i][j] : '';
-            rowElement.appendChild(cellElement);
-        }
-        container.appendChild(rowElement);
-    }
-}*/
 
 function sudokuCreater(sudokuMas) {
     sudokuMas.forEach((row, rowIndex) => {
@@ -200,13 +179,13 @@ function sudokuCreater(sudokuMas) {
             cellElement.setAttribute("ID_Cell", rowIndex + "" + columnIndex);
             rowElement.appendChild(cellElement);
         });
-        container.appendChild(rowElement);
+        containerSudoku.appendChild(rowElement);
     });
 }
 
 function getQuantityAllNumbers() {
-    sudoku.sudokuMassive.forEach((row, rowIndex) => {
-        row.forEach((cell, columnIndex) => {
+    sudoku.sudokuMassive.forEach((row) => {
+        row.forEach((cell) => {
             if (cell != 0) {
                 masQuantityAllNumbers[cell - 1] -= 1;
             }
@@ -239,8 +218,11 @@ document.addEventListener("click", function (e) {
         tempCell.textContent = "";
         mistake = false;
     }
+    if (e.target.className == "cell_number_bottom" && tempCell != null && tempCell.textContent != "") {
+        checkNumberForMatch(e.target);
+    }
     if (e.target.className == "cell" || e.target.className == "cell_2") {
-        if (tempCell != null && e.target != tempCell) { tempCell.style.backgroundColor = 'white'; }
+        if (tempCell != null && e.target != tempCell) {tempCell.style.backgroundColor = rootStyles.getPropertyValue('--color-main-cell');}
         tempCell = e.target;
         checkNumberForMatch(tempCell);
     }
@@ -252,13 +234,13 @@ document.addEventListener("click", function (e) {
 
 function checkCorrectAnswer(params) {
     if (sudoku.sudokuAnswerMassive[params.getAttribute("ID_Cell")[0]][params.getAttribute("ID_Cell")[1]] != params.textContent) {
-        params.style.backgroundColor = 'red';
+        params.style.backgroundColor = rootStyles.getPropertyValue('--color-mistake');
         mistakeCount++;
         document.getElementById("showMistakeCount").textContent = mistakeCount;
         return true;
     } else {
         sudoku.sudokuMassive[params.getAttribute("ID_Cell")[0]][params.getAttribute("ID_Cell")[1]] = params.textContent;
-        params.style.backgroundColor = '#EE82EE';
+        params.style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect');
         document.getElementById("cell_number_top" + params.textContent).textContent = masQuantityAllNumbers[params.textContent - 1] - 1;
         masQuantityAllNumbers[params.textContent - 1] = masQuantityAllNumbers[params.textContent - 1] - 1;
         if (masQuantityAllNumbers[params.textContent - 1] == 0) {
@@ -271,7 +253,6 @@ function checkCorrectAnswer(params) {
         if(checkAllFillVertical(params) == size){
             successIlluminationVertical(params);
         }
-        
         return false;
     }
 }
@@ -279,10 +260,11 @@ function checkCorrectAnswer(params) {
 function checkNumberForMatch(params) {
     sudoku.sudokuMassive.forEach((row, rowIndex) => {
         row.forEach((cell, columnIndex) => {
-            document.getElementById(rowIndex + "" + columnIndex).style.backgroundColor = 'white';
+            document.getElementById(rowIndex + "" + columnIndex).style.backgroundColor = rootStyles.getPropertyValue('--color-main-cell');
             if (cell == params.textContent && params.textContent != "") {
-                document.getElementById(rowIndex + "" + columnIndex).style.backgroundColor = '#EE82EE';
-            } else if (params.textContent == "") { document.getElementById(params.getAttribute("ID_Cell")[0] + "" + params.getAttribute("ID_Cell")[1]).style.backgroundColor = '#EE82EE'; }
+                document.getElementById(rowIndex + "" + columnIndex).style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect');
+            } else if (params.textContent == "") { document.getElementById(params.getAttribute("ID_Cell")[0] + "" 
+                + params.getAttribute("ID_Cell")[1]).style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect'); }
         });
     });
 }
@@ -299,7 +281,7 @@ function checkAllFillHorizontal(params) {
 
 function checkAllFillVertical(params) {
     let count = 0;
-    sudoku.sudokuMassive.forEach((row, rowIndex) => {
+    sudoku.sudokuMassive.forEach((row) => {
        if(row[params.getAttribute("ID_Cell")[1]] != 0){
         count++;
        }
@@ -309,14 +291,12 @@ function checkAllFillVertical(params) {
 
 function successIlluminationHorizontal(params) {
     for (let i = 0; i< size; i++) {
-        document.getElementById(params.getAttribute("ID_Cell")[0]+i).style.backgroundColor = '#EE82EE';;
+        document.getElementById(params.getAttribute("ID_Cell")[0]+i).style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect');
     }
 }
 
 function successIlluminationVertical(params) {
     for (let i = 0; i< size; i++) {
-        document.getElementById(i+params.getAttribute("ID_Cell")[1]).style.backgroundColor = '#EE82EE';;
+        document.getElementById(i+params.getAttribute("ID_Cell")[1]).style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect');
     }
 }
-
-    
