@@ -12,7 +12,6 @@
     <script src="master.js" defer></script>
     <title>Судоку</title>
 </head>
-
 <body>
     <div class="containerForMistakeBlock">
         <div style="display: inline-grid;">
@@ -28,14 +27,12 @@
             </div>
         </div>
     </div>
-    </div>
 
     <button id="startGame" onclick="clickStartGame()">Начать новую игру</button>
 
-    <div class="container" id="container"></div>
-
-    <div id="blockNumber"></div>
-
+    <div id="subokuBlock" style="display: none;" class="containerBlock">
+        <div class="containerSudoku" id="containerSudoku"></div>
+        <div id="blockNumber"></div>
+    </div>
 </body>
-
 </html>
