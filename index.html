@@ -229,7 +229,7 @@
     }
 
     let size = 9;
-    let difficulty = 10;
+    let difficulty;
     let sudoku;
     let tempCell;
     let mistake = false;
@@ -239,6 +239,7 @@
         difficulty = document.getElementById("customDifficulty").value;
     }
     function clickStartGame() {
+        checkCustomDifficulty();
         masQuantityAllNumbers = [9, 9, 9, 9, 9, 9, 9, 9, 9]
         sudoku = new Sudoku(size, difficulty);
         while (document.getElementById("container").firstChild) {
