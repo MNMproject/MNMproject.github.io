@@ -12,10 +12,20 @@
 </head>
 
 <body>
-    <div>
-        <div>Сложность</div>
-        <input id="customDifficulty" type="range" min="10" max="55" step="1" value="30"
-            oninput="checkCustomDifficulty()">
+    <div class="containerForMistakeBlock">
+        <div style="display: inline-grid;">
+            <div>Сложность</div>
+            <input id="customDifficulty" type="range" min="10" max="55" step="1" value="30"
+                oninput="checkCustomDifficulty()">
+        </div>
+        <div id="mistakeBlock" style="display: none; margin-left: 20px;" >Ошибки:
+            <div class="containerForMistakeBlock">
+                <div id="showMistakeCount" style="margin-left: 20px;"></div>
+                <div>/</div>
+                <div id="showMaxMistakeCount"></div>
+            </div>
+        </div>
+    </div>
     </div>
     <button id="startGame" onclick="clickStartGame()">Начать новую игру</button>
     <div class="container" id="container"></div>
@@ -27,6 +37,12 @@
 </html>
 
 <style>
+    .containerForMistakeBlock {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
     .container {
         display: flex;
         flex-direction: column;
@@ -229,10 +245,12 @@
     }
 
     let size = 9;
-    let difficulty;
+    let difficulty = 10;
     let sudoku;
     let tempCell;
     let mistake = false;
+    let mistakeCount;
+    let maxMistake;
     let masQuantityAllNumbers;
 
     function checkCustomDifficulty() {
@@ -240,7 +258,9 @@
     }
     function clickStartGame() {
         checkCustomDifficulty();
-        masQuantityAllNumbers = [9, 9, 9, 9, 9, 9, 9, 9, 9]
+        masQuantityAllNumbers = [9, 9, 9, 9, 9, 9, 9, 9, 9];
+        mistakeCount = 0;
+        maxMistake = 3;
         sudoku = new Sudoku(size, difficulty);
         while (document.getElementById("container").firstChild) {
             document.getElementById("container").removeChild(document.getElementById("container").firstChild);
@@ -248,6 +268,9 @@
         while (document.getElementById("blockNumber").firstChild) {
             document.getElementById("blockNumber").removeChild(document.getElementById("blockNumber").firstChild);
         }
+        document.getElementById("mistakeBlock").style.display = 'block';
+        document.getElementById("showMistakeCount").textContent = mistakeCount;
+        document.getElementById("showMaxMistakeCount").textContent = maxMistake;
         sudoku.getMas(sudoku);
         getQuantityAllNumbers();
         sudokuCreater(sudoku.sudokuMassive);
@@ -352,6 +375,8 @@
     function checkCorrectAnswer(params) {
         if (sudoku.sudokuAnswerMassive[params.getAttribute("ID_Cell")[0]][params.getAttribute("ID_Cell")[1]] != params.textContent) {
             params.style.backgroundColor = 'red';
+            mistakeCount++;
+            document.getElementById("showMistakeCount").textContent = mistakeCount;
             return true;
         } else {
             sudoku.sudokuMassive[params.getAttribute("ID_Cell")[0]][params.getAttribute("ID_Cell")[1]] = params.textContent;
