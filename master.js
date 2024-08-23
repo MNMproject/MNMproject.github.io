@@ -144,6 +144,7 @@ function clickStartGame() {
     mistakeCount = 0;
     maxMistake = 3;
     checkWinner = 0
+    document.getElementById("winnerBlock").style.display = 'none';
     sudoku = new Sudoku(size, difficulty);
     while (document.getElementById("containerSudoku").firstChild) {
         document.getElementById("containerSudoku").removeChild(document.getElementById("containerSudoku").firstChild);
