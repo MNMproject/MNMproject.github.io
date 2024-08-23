@@ -258,8 +258,8 @@ function checkCorrectAnswer(params) {
             successIlluminationVertical(params);
         }
         if(checkWinner == 0){
-            alert("Судоку собран. Поздравляю!");
-            //document.getElementById("containerSudoku").style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect');
+           winnerllumination();
+           document.getElementById("winnerBlock").style.display = 'block';
         }
         return false;
     }
@@ -279,7 +279,7 @@ function checkNumberForMatch(params) {
 
 function checkAllFillHorizontal(params) {
     let count = 0;
-    sudoku.sudokuMassive[params.getAttribute("ID_Cell")[0]].forEach((cell, columnIndex) => {
+    sudoku.sudokuMassive[params.getAttribute("ID_Cell")[0]].forEach((cell) => {
         if(cell != 0){
             count++;
         }
@@ -306,5 +306,13 @@ function successIlluminationHorizontal(params) {
 function successIlluminationVertical(params) {
     for (let i = 0; i< size; i++) {
         document.getElementById(i+params.getAttribute("ID_Cell")[1]).style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect');
+    }
+}
+
+function winnerllumination() {
+    for (let i = 0; i < size; i++) {
+       for (let j = 0; j < size; j++) {
+        document.getElementById(i+""+j).style.backgroundColor = rootStyles.getPropertyValue('--color-winner');
+       } 
     }
 }
