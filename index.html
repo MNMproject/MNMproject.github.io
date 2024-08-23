@@ -13,27 +13,31 @@
     <title>Судоку</title>
 </head>
 <body>
-    <div class="containerForMistakeBlock">
+    <div class="containerForCenterBlock">
         <div style="display: inline-grid;">
             <div>Сложность</div>
             <input id="customDifficulty" type="range" min="10" max="55" step="1" value="30"
                 oninput="checkCustomDifficulty()">
         </div>
         <div id="mistakeBlock" style="display: none; margin-left: 20px;">Ошибки:
-            <div class="containerForMistakeBlock">
+            <div class="containerForCenterBlock">
                 <div id="showMistakeCount" style="margin-left: 20px;"></div>
                 <div>/</div>
                 <div id="showMaxMistakeCount"></div>
             </div>
         </div>
     </div>
-
-    <button id="startGame" onclick="clickStartGame()">Начать новую игру</button>
-
-    <div id="subokuBlock" style="display: none;" class="containerBlock">
-        <div class="containerSudoku" id="containerSudoku"></div>
-        <div id="blockNumber"></div>
+    <div class="containerForCenterBlock">
+        <button id="startGame" onclick="clickStartGame()">Начать новую игру</button>
     </div>
-    <div id="winnerBlock" class="winner_text" style="display: none;">Судоку собран. Поздравляю!</div>
+    <div class="containerForCenterBlock">
+        <div id="subokuBlock" style="display: none;" class="containerBlock">
+            <div class="containerSudoku" id="containerSudoku"></div>
+            <div id="blockNumber"></div>
+        </div>
+    </div>
+    <div class="containerForCenterBlock">
+        <div id="winnerBlock" class="winner_text" style="display: none;">Судоку собран. Поздравляю!</div>
+    </div>
 </body>
 </html>
