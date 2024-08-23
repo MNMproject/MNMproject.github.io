@@ -1,3 +1,10 @@
+:root{
+    --color-for-slect:#EE82EE;
+    --color-mistake: red;
+    --color-main-cell: white;
+    --color-winner: #98FB98;
+}
+
 .containerForMistakeBlock {
     display: flex;
     flex-direction: row;
@@ -82,8 +89,8 @@
     background-color: var(--color-for-slect);
 }
 
-:root{
-    --color-for-slect:#EE82EE;
-    --color-mistake: red;
-    --color-main-cell: white;
+.winner_text{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
 }
