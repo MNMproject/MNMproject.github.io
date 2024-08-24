@@ -13,15 +13,22 @@
     <title>Судоку</title>
 </head>
 <body>
-    <div class="containerForCenterBlock">
-        <div style="display: inline-grid;">
-            <div>Сложность</div>
+    <div class="settingsBlock">
+        <div>
+            <label for="sudokuSelector" class="containerForCenterBlock">Судоку</label>
+            <select id="sudokuSelector">
+                <option value="numbers" selected>Цифры</option>
+                <option value="letters">Буквы</option>
+            </select>
+        </div>
+        <div>
+            <div class="containerForCenterBlock">Сложность</div>
             <input id="customDifficulty" type="range" min="10" max="55" step="1" value="30"
                 oninput="checkCustomDifficulty()">
         </div>
-        <div id="mistakeBlock" style="display: none; margin-left: 20px;">Ошибки:
+        <div id="mistakeBlock" style="display: none;">Ошибки
             <div class="containerForCenterBlock">
-                <div id="showMistakeCount" style="margin-left: 20px;"></div>
+                <div id="showMistakeCount"></div>
                 <div>/</div>
                 <div id="showMaxMistakeCount"></div>
             </div>
