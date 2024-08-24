@@ -137,6 +137,15 @@ let checkWinner;
 let masIntForChange = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 let masLatinLettersForChange = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 let masCyrillicLettersForChange = ['', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З'];
+let masAnimalsForChange = ['', (String.fromCodePoint('128053')), (String.fromCodePoint('128054')), (String.fromCodePoint('129409')),
+    (String.fromCodePoint('129437')), (String.fromCodePoint('128047')), (String.fromCodePoint('128060')), (String.fromCodePoint('128039')),
+    (String.fromCodePoint('129417')), (String.fromCodePoint('128056'))];
+let masFruitsForChange = ['', (String.fromCodePoint('127817')), (String.fromCodePoint('127818')), (String.fromCodePoint('127819')),
+    (String.fromCodePoint('127822')), (String.fromCodePoint('127826')), (String.fromCodePoint('127827')), (String.fromCodePoint('129373')),
+    (String.fromCodePoint('129361')), (String.fromCodePoint('127824'))];
+let timerID;
+
+
 function checkCustomDifficulty() {
     difficulty = document.getElementById("customDifficulty").value;
 }
@@ -146,7 +155,8 @@ function clickStartGame() {
     masQuantityAllNumbers = [9, 9, 9, 9, 9, 9, 9, 9, 9];
     mistakeCount = 0;
     maxMistake = 3;
-    checkWinner = 0
+    checkWinner = 0;
+    let timerTime = 60 * 10;
     document.getElementById("winnerBlock").style.display = 'none';
     sudoku = new Sudoku(size, difficulty);
     cleanCell("containerSudoku");
@@ -158,6 +168,8 @@ function clickStartGame() {
     getQuantityAllNumbers();
     getSelectSudoku(document.getElementById("sudokuSelector").value);
     document.getElementById("subokuBlock").style.display = 'block';
+    clearInterval(timerID);
+    timer(timerTime, document.getElementById("timerGame"));
 }
 
 function cleanCell(params) {
@@ -183,6 +195,16 @@ function getSelectSudoku(params) {
             invertMassiv(masiveSudoku, masLatinLettersForChange);
             sudokuCreater(masiveSudoku[0]);
             createNumberBlock(masLatinLettersForChange);
+            break;
+        case "animalsIcon":
+            invertMassiv(masiveSudoku, masAnimalsForChange);
+            sudokuCreater(masiveSudoku[0]);
+            createNumberBlock(masAnimalsForChange);
+            break;
+        case "fruitslsIcon":
+            invertMassiv(masiveSudoku, masFruitsForChange);
+            sudokuCreater(masiveSudoku[0]);
+            createNumberBlock(masFruitsForChange);
             break;
     }
 
@@ -257,28 +279,6 @@ function createNumberBlock(mas) {
     }
 }
 
-function createLetterBlock(mas) {
-    for (i = 1; i < size + 1; i++) {
-        if (masQuantityAllNumbers[i - 1] > 0) {
-            const topElement = document.createElement('div');
-            topElement.classList.add('cell_number_top');
-            topElement.id = "cell_number_top" + i;
-            topElement.textContent = masQuantityAllNumbers[i - 1];
-            const bottomElement = document.createElement('div');
-            bottomElement.classList.add('cell_number_bottom');
-            bottomElement.id = i + "cell_number_bottom";
-            bottomElement.textContent = mas[i];
-            const element = document.createElement('div');
-            element.classList.add('cell_number_block');
-            element.id = "cell_number_block" + i;
-            element.prepend(topElement);
-            element.append(bottomElement);
-            blockNumber.append(element);
-            checkWinner++;
-        }
-    }
-}
-
 document.addEventListener("click", function (e) {
     if (mistake) {
         tempCell.textContent = "";
@@ -306,7 +306,7 @@ function checkCorrectAnswer(cell, number) {
         return true;
     } else {
         masiveSudoku[0][cell.getAttribute("ID_Cell")[0]][cell.getAttribute("ID_Cell")[1]] = cell.textContent;
-        cell.style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect');
+        cell.style.backgroundColor = rootStyles.getPropertyValue('--color-for-select');
         document.getElementById("cell_number_top" + number.id[0]).textContent = masQuantityAllNumbers[number.id[0] - 1] - 1;
         masQuantityAllNumbers[number.id[0] - 1] = masQuantityAllNumbers[number.id[0] - 1] - 1;
         if (masQuantityAllNumbers[number.id[0] - 1] == 0) {
@@ -321,8 +321,7 @@ function checkCorrectAnswer(cell, number) {
             successIlluminationVertical(cell);
         }
         if (checkWinner == 0) {
-            winnerllumination();
-            document.getElementById("winnerBlock").style.display = 'block';
+            winnerIllumination();
         }
         return false;
     }
@@ -333,10 +332,10 @@ function checkNumberForMatch(params) {
         row.forEach((cell, columnIndex) => {
             document.getElementById(rowIndex + "" + columnIndex).style.backgroundColor = rootStyles.getPropertyValue('--color-main-cell');
             if (cell == params.textContent && params.textContent != "") {
-                document.getElementById(rowIndex + "" + columnIndex).style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect');
+                document.getElementById(rowIndex + "" + columnIndex).style.backgroundColor = rootStyles.getPropertyValue('--color-for-select');
             } else if (params.textContent == "") {
                 document.getElementById(params.getAttribute("ID_Cell")[0] + ""
-                    + params.getAttribute("ID_Cell")[1]).style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect');
+                    + params.getAttribute("ID_Cell")[1]).style.backgroundColor = rootStyles.getPropertyValue('--color-for-select');
             }
         });
     });
@@ -364,20 +363,55 @@ function checkAllFillVertical(params) {
 
 function successIlluminationHorizontal(params) {
     for (let i = 0; i < size; i++) {
-        document.getElementById(params.getAttribute("ID_Cell")[0] + i).style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect');
+        document.getElementById(params.getAttribute("ID_Cell")[0] + i).style.backgroundColor = rootStyles.getPropertyValue('--color-for-select');
     }
 }
 
 function successIlluminationVertical(params) {
     for (let i = 0; i < size; i++) {
-        document.getElementById(i + params.getAttribute("ID_Cell")[1]).style.backgroundColor = rootStyles.getPropertyValue('--color-for-slect');
+        document.getElementById(i + params.getAttribute("ID_Cell")[1]).style.backgroundColor = rootStyles.getPropertyValue('--color-for-select');
     }
 }
 
-function winnerllumination() {
+function winnerIllumination() {
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
             document.getElementById(i + "" + j).style.backgroundColor = rootStyles.getPropertyValue('--color-winner');
         }
     }
+    document.getElementById("winnerBlock").textContent = "Судоку собран. Поздравляю!";
+    document.getElementById("winnerBlock").style.display = 'block';
+    clearInterval(timerID);
+}
+
+function loseIllumination(text) {
+    cleanCell("blockNumber");
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+            document.getElementById(i + "" + j).style.backgroundColor = rootStyles.getPropertyValue('--color-mistake');
+        }
+    }
+    document.getElementById("winnerBlock").textContent = text;
+    document.getElementById("winnerBlock").style.display = 'block';
+}
+
+
+function timer(duration, display) {
+    var timer = duration, minutes, seconds;
+    timerID = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+
+        if (minutes == 0 && seconds == 0) {
+            clearInterval(timerID);
+            loseIllumination("Время вышло. Попробуй ещё раз!");
+        }
+    }, 1000);
 }
