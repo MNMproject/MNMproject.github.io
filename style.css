@@ -1,5 +1,5 @@
 :root{
-    --color-for-slect:#EE82EE;
+    --color-for-select:#EE82EE;
     --color-mistake: red;
     --color-main-cell: white;
     --color-winner: #98FB98;
@@ -12,8 +12,7 @@
     align-items: center;
     text-align: center;
     grid-gap: 15px;
-    grid-template-columns: 33% 33% 33%;
-    align-items: flex-end;
+    grid-template-rows: 1fr 1fr 1fr;
     margin: 10px;
 }
 
@@ -92,13 +91,14 @@
     width: 30px;
     height: 40px;
     border: 1px solid black;
+    align-items: center;
     text-align: center;
     line-height: 40px;
     box-sizing: border-box;
     font-size: 25px;
     font-weight: 700;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-color: var(--color-for-slect);
+    background-color: var(--color-for-select);
 }
 
 .winner_text{
