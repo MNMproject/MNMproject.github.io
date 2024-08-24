@@ -5,6 +5,18 @@
     --color-winner: #98FB98;
 }
 
+.settingsBlock{
+    width: 98%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    grid-gap: 15px;
+    grid-template-columns: 33% 33% 33%;
+    align-items: flex-end;
+    margin: 10px;
+}
+
 .containerForCenterBlock {
     display: flex;
     justify-content: center;
