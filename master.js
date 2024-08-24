@@ -134,9 +134,9 @@ let mistakeCount;
 let maxMistake;
 let masQuantityAllNumbers;
 let checkWinner;
-let masLettersForChangeLetter = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 let masIntForChange = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+let masLatinLettersForChange = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+let masCyrillicLettersForChange = ['', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З'];
 function checkCustomDifficulty() {
     difficulty = document.getElementById("customDifficulty").value;
 }
@@ -173,24 +173,30 @@ function getSelectSudoku(params) {
             createNumberBlock(masIntForChange);
             break;
 
-        case "letters":
-            invertMassiv(masiveSudoku);
+        case "cyrillicLetters":
+            invertMassiv(masiveSudoku, masCyrillicLettersForChange);
             sudokuCreater(masiveSudoku[0]);
-            createNumberBlock(masLettersForChangeLetter);
+            createNumberBlock(masCyrillicLettersForChange);
+            break;
+
+        case "latinLetters":
+            invertMassiv(masiveSudoku, masLatinLettersForChange);
+            sudokuCreater(masiveSudoku[0]);
+            createNumberBlock(masLatinLettersForChange);
             break;
     }
 
 }
 
-function invertMassiv(mas) {
-    invertInLetterMasive(mas[0]);
-    invertInLetterMasive(mas[1]);
+function invertMassiv(mas, letterMassiv) {
+    invertInLetterMasive(mas[0], letterMassiv);
+    invertInLetterMasive(mas[1], letterMassiv);
 }
 
-function invertInLetterMasive(mas) {
+function invertInLetterMasive(mas, letterMassiv) {
     mas.forEach((row, rowIndex) => {
         row.forEach((cell, columnIndex) => {
-            mas[rowIndex][columnIndex] = masLettersForChangeLetter[cell];
+            mas[rowIndex][columnIndex] = letterMassiv[cell];
         });
     });
 }
