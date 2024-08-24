@@ -11,8 +11,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    grid-gap: 10px;
-    grid-template-rows: 1fr 1fr;
+    grid-gap: 5px;
     grid-template-columns: 33% 33% 33%;
     align-items: flex-end;
     margin: 10px;
