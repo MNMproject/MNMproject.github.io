@@ -20,6 +20,8 @@
                 <option value="numbers" selected>Цифры</option>
                 <option value="cyrillicLetters">Кириллица</option>
                 <option value="latinLetters">Латинские Буквы</option>
+                <option value="animalsIcon">Животные</option>
+                <option value="fruitslsIcon">Фрукты</option>
             </select>
         </div>
         <div>
@@ -35,9 +37,11 @@
             </div>
         </div>
     </div>
-    <div class="containerForCenterBlock">
+    <div class="settingsBlock">
         <button id="startGame" onclick="clickStartGame()">Начать новую игру</button>
+        <div id="timerGame"></div>
     </div>
+
     <div class="containerForCenterBlock">
         <div id="subokuBlock" style="display: none;" class="containerBlock">
             <div class="containerSudoku" id="containerSudoku"></div>
@@ -45,7 +49,7 @@
         </div>
     </div>
     <div class="containerForCenterBlock">
-        <div id="winnerBlock" class="winner_text" style="display: none;">Судоку собран. Поздравляю!</div>
+        <div id="winnerBlock" class="winner_text" style="display: none;"></div>
     </div>
 </body>
 </html>
