@@ -3,18 +3,46 @@
     --color-mistake: red;
     --color-main-cell: white;
     --color-winner: #98FB98;
+    --color-text-winner: #23b423;
+    --color-text-mistake: rgb(225, 27, 27);
+    --color-button:#ed5bed;
+    --color-shadow-button:#f8b7f8;
 }
 
 .settingsBlock{
     width: 98%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    
     text-align: center;
-    grid-gap: 5px;
-    grid-template-columns: 33% 33% 33%;
-    align-items: flex-end;
     margin: 10px;
+}
+
+.topSettingsBlock{
+    width: 320px;
+    display: grid;
+    gap: 7px;
+    grid-template-columns: 40% 40% 20%;
+}
+
+.bottomSettingsBlock{
+    width: 320px;
+    display: grid;
+    grid-template-columns: 50% 20% 20%;
+    text-align: center;
+}
+
+button{
+    width: fit-content;
+    border: 0px;
+    border-radius: 5px;
+    color: white;
+    background-color: var(--color-button);
+    box-shadow: 0px 0px 1px 3px var(--color-shadow-button);
+}
+
+input[type='range']{
+    accent-color: var(--color-button); 
 }
 
 .containerForCenterBlock {
@@ -92,7 +120,6 @@
     width: 30px;
     height: 40px;
     border: 1px solid black;
-    align-items: center;
     text-align: center;
     line-height: 40px;
     box-sizing: border-box;
