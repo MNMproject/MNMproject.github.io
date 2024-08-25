@@ -14,32 +14,37 @@
 </head>
 <body>
     <div class="settingsBlock">
-        <div>
-            <label for="sudokuSelector" class="containerForCenterBlock">Судоку</label>
-            <select id="sudokuSelector">
-                <option value="numbers" selected>Цифры</option>
-                <option value="cyrillicLetters">Кириллица</option>
-                <option value="latinLetters">Латинские Буквы</option>
-                <option value="animalsIcon">Животные</option>
-                <option value="fruitslsIcon">Фрукты</option>
-            </select>
-        </div>
-        <div>
-            <div class="containerForCenterBlock">Сложность</div>
-            <input id="customDifficulty" type="range" min="10" max="55" step="1" value="30"
-                oninput="checkCustomDifficulty()">
-        </div>
-        <div id="mistakeBlock" style="display: none;">Ошибки
-            <div class="containerForCenterBlock">
-                <div id="showMistakeCount"></div>
-                <div>/</div>
-                <div id="showMaxMistakeCount"></div>
+        <div class="topSettingsBlock">
+            <div>
+                <label for="sudokuSelector" class="containerForCenterBlock">Судоку</label>
+                <select id="sudokuSelector">
+                    <option value="numbers" selected>Цифры</option>
+                    <option value="cyrillicLetters">Кириллица</option>
+                    <option value="latinLetters">Латинские Буквы</option>
+                    <option value="animalsIcon">Животные</option>
+                    <option value="fruitslsIcon">Фрукты</option>
+                </select>
+            </div>
+            <div>
+                <div class="containerForCenterBlock">Сложность</div>
+                <input id="customDifficulty" type="range" min="10" max="55" step="1" value="30"
+                    oninput="checkCustomDifficulty()">
+            </div>
+            <div id="mistakeBlock" style="display: none;">Ошибки
+                <div class="containerForCenterBlock">
+                    <div id="showMistakeCount"></div>
+                    <div>/</div>
+                    <div id="showMaxMistakeCount"></div>
+                </div>
             </div>
         </div>
     </div>
     <div class="settingsBlock">
-        <button id="startGame" onclick="clickStartGame()">Начать новую игру</button>
-        <div id="timerGame"></div>
+        <div class="bottomSettingsBlock">
+            <button id="startGame" onclick="clickStartGame()">Начать новую игру</button>
+            <div id="timerGame"></div>
+            <div id="timeBonus"></div>
+        </div>
     </div>
 
     <div class="containerForCenterBlock">
