@@ -134,6 +134,8 @@ let mistakeCount;
 let maxMistake;
 let masQuantityAllNumbers;
 let checkWinner;
+let timerTime;
+let bonusMinute;
 let masIntForChange = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 let masLatinLettersForChange = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 let masCyrillicLettersForChange = ['', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З'];
@@ -148,6 +150,17 @@ let timerID;
 
 function checkCustomDifficulty() {
     difficulty = document.getElementById("customDifficulty").value;
+    timerSelector(difficulty);
+}
+
+function timerSelector(params) {
+    if (params <= 25) {
+        timerTime = 60 * 5;
+    } else if (params > 25 && params < 40) {
+        timerTime = 60 * 10;
+    } else if (params >= 40) {
+        timerTime = 60 * 15;
+    } else { timerTime = 60 * 12; }
 }
 
 function clickStartGame() {
@@ -156,8 +169,9 @@ function clickStartGame() {
     mistakeCount = 0;
     maxMistake = 3;
     checkWinner = 0;
-    let timerTime = 60 * 10;
+    bonusMinute = 0;
     document.getElementById("winnerBlock").style.display = 'none';
+    document.getElementById("timeBonus").style.display = 'none';
     sudoku = new Sudoku(size, difficulty);
     cleanCell("containerSudoku");
     cleanCell("blockNumber");
@@ -302,6 +316,7 @@ function checkCorrectAnswer(cell, number) {
     if (masiveSudoku[1][cell.getAttribute("ID_Cell")[0]][cell.getAttribute("ID_Cell")[1]] != cell.textContent) {
         cell.style.backgroundColor = rootStyles.getPropertyValue('--color-mistake');
         mistakeCount++;
+        bonusMinute--;
         document.getElementById("showMistakeCount").textContent = mistakeCount;
         return true;
     } else {
@@ -316,9 +331,11 @@ function checkCorrectAnswer(cell, number) {
         checkNumberForMatch(cell);
         if (checkAllFillHorizontal(cell) == size) {
             successIlluminationHorizontal(cell);
+            bonusMinute++;
         }
         if (checkAllFillVertical(cell) == size) {
             successIlluminationVertical(cell);
+            bonusMinute++;
         }
         if (checkWinner == 0) {
             winnerIllumination();
@@ -397,21 +414,42 @@ function loseIllumination(text) {
 
 
 function timer(duration, display) {
-    var timer = duration, minutes, seconds;
+    let timer = duration, minutes, seconds;
+    let bonusTimeVisible = 0;
     timerID = setInterval(function () {
+        if (bonusMinute > 0) {
+            timer += bonusMinute * 60;
+            document.getElementById("timeBonus").style.color = rootStyles.getPropertyValue('--color-text-winner');
+            document.getElementById("timeBonus").textContent = "+" + bonusMinute + "минута";
+            document.getElementById("timeBonus").style.display = 'block';
+            bonusTimeVisible = 5;
+            bonusMinute = 0;
+        } else if (bonusMinute < 0) {
+            timer += bonusMinute * 60;
+            document.getElementById("timeBonus").style.color = rootStyles.getPropertyValue('--color-text-mistake');
+            document.getElementById("timeBonus").textContent = bonusMinute + "минута";
+            document.getElementById("timeBonus").style.display = 'block';
+            bonusTimeVisible = 5;
+            bonusMinute = 0;
+        }
+
+        if(bonusTimeVisible > 0){
+            bonusTimeVisible --;
+        }else{
+            document.getElementById("timeBonus").style.display = 'none';
+        }
+        
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
         display.textContent = minutes + ":" + seconds;
 
-        if (--timer < 0) {
-            timer = duration;
-        }
 
-        if (minutes == 0 && seconds == 0) {
+        if (--timer < 0) {
             clearInterval(timerID);
             loseIllumination("Время вышло. Попробуй ещё раз!");
+            display.textContent = "00" + ":" + "00";
         }
     }, 1000);
 }
