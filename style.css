@@ -1,19 +1,18 @@
 :root{
-    --color-for-select:#EE82EE;
+    --color-for-select:#d882ee;
     --color-mistake: red;
     --color-main-cell: white;
     --color-winner: #98FB98;
     --color-text-winner: #23b423;
     --color-text-mistake: rgb(225, 27, 27);
-    --color-button:#ed5bed;
-    --color-shadow-button:#f8b7f8;
+    --color-button:#d05bed;
+    --color-shadow-button:#e8b7f8;
 }
 
 .settingsBlock{
     width: 98%;
     display: flex;
     justify-content: center;
-    
     text-align: center;
     margin: 10px;
 }
@@ -22,13 +21,30 @@
     width: 320px;
     display: grid;
     gap: 7px;
-    grid-template-columns: 40% 40% 20%;
+    grid-template-columns: 50% 50%;
 }
 
 .bottomSettingsBlock{
     width: 320px;
     display: grid;
-    grid-template-columns: 50% 20% 20%;
+    grid-template-columns: 50% 50%;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.timeBlock{
+    width: 320px;
+    height: 15px;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    text-align: center;
+}
+
+.helpBlock{
+    width: 40px;
+    height: 40px;
+    display: grid;
+    grid-template-columns: 90% 10%;
     text-align: center;
 }
 
@@ -41,7 +57,7 @@ button{
     box-shadow: 0px 0px 1px 3px var(--color-shadow-button);
 }
 
-input[type='range']{
+input{
     accent-color: var(--color-button); 
 }
 
@@ -58,7 +74,6 @@ input[type='range']{
 .containerSudoku {
     display: inline-flex;
     flex-direction: column;
-    margin-top: 20px;
     border: 5px solid black;
 }
 
@@ -100,7 +115,7 @@ input[type='range']{
 
 .cell_number_block {
     display: inline-grid;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 5px;
 }
 
@@ -131,6 +146,6 @@ input[type='range']{
 
 .winner_text{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
 }
