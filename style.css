@@ -9,6 +9,10 @@
     --color-shadow-button:#e8b7f8;
 }
 
+body{
+    background-color: var(--color-main-cell);
+}
+
 .settingsBlock{
     width: 98%;
     display: flex;
