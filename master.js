@@ -133,9 +133,11 @@ let mistake = false;
 let mistakeCount;
 let maxMistake;
 let masQuantityAllNumbers;
+let playerSelectMassive
 let checkWinner;
 let timerTime;
 let bonusMinute;
+let playerHelpCount;
 let masIntForChange = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 let masLatinLettersForChange = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 let masCyrillicLettersForChange = ['', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З'];
@@ -150,7 +152,6 @@ let timerID;
 
 function checkCustomDifficulty() {
     difficulty = document.getElementById("customDifficulty").value;
-    timerSelector(difficulty);
 }
 
 function timerSelector(params) {
@@ -165,25 +166,39 @@ function timerSelector(params) {
 
 function clickStartGame() {
     checkCustomDifficulty();
-    masQuantityAllNumbers = [9, 9, 9, 9, 9, 9, 9, 9, 9];
+    masQuantityAllNumbers = [size, size, size, size, size, size, size, size, size];
     mistakeCount = 0;
     maxMistake = 3;
     checkWinner = 0;
     bonusMinute = 0;
+    playerHelpCount = 2;
     document.getElementById("winnerBlock").style.display = 'none';
     document.getElementById("timeBonus").style.display = 'none';
+    document.getElementById("mistakeBlock").style.display = 'none';
+    document.getElementById("helpForPlayer").style.display = 'none';
     sudoku = new Sudoku(size, difficulty);
     cleanCell("containerSudoku");
     cleanCell("blockNumber");
-    document.getElementById("mistakeBlock").style.display = 'block';
     document.getElementById("showMistakeCount").textContent = mistakeCount;
     document.getElementById("showMaxMistakeCount").textContent = maxMistake;
     masiveSudoku = sudoku.getMas(sudoku);
     getQuantityAllNumbers();
-    getSelectSudoku(document.getElementById("sudokuSelector").value);
+    playerSelectMassive = getSelectMassive();
+    getSelectSudoku(document.getElementById("sudokuSelector").value, playerSelectMassive);
     document.getElementById("subokuBlock").style.display = 'block';
     clearInterval(timerID);
-    timer(timerTime, document.getElementById("timerGame"));
+    timeSelectOptions();
+}
+
+function timeSelectOptions() {
+    if (document.getElementById("radioTimeSelect").checked) {
+        timerSelector(difficulty);
+        timerDown(timerTime, document.getElementById("timerGame"));
+    }
+    else {
+        document.getElementById("mistakeBlock").style.display = 'block';
+        timerUp(document.getElementById("timerGame"));
+    }
 }
 
 function cleanCell(params) {
@@ -192,36 +207,33 @@ function cleanCell(params) {
     }
 }
 
-function getSelectSudoku(params) {
+function getSelectMassive() {
+    switch (document.getElementById("sudokuSelector").value) {
+        case "numbers":
+            return masIntForChange;
+        case "cyrillicLetters":
+            return masCyrillicLettersForChange;
+        case "latinLetters":
+            return masLatinLettersForChange;
+        case "animalsIcon":
+            return masAnimalsForChange;
+        case "fruitslsIcon":
+            return masFruitsForChange;
+    }
+}
+
+function getSelectSudoku(params, massive) {
     switch (params) {
         case "numbers":
             sudokuCreater(masiveSudoku[0]);
-            createNumberBlock(masIntForChange);
+            createNumberBlock(massive);
             break;
-
-        case "cyrillicLetters":
-            invertMassiv(masiveSudoku, masCyrillicLettersForChange);
+        default:
+            invertMassiv(masiveSudoku, massive);
             sudokuCreater(masiveSudoku[0]);
-            createNumberBlock(masCyrillicLettersForChange);
-            break;
-
-        case "latinLetters":
-            invertMassiv(masiveSudoku, masLatinLettersForChange);
-            sudokuCreater(masiveSudoku[0]);
-            createNumberBlock(masLatinLettersForChange);
-            break;
-        case "animalsIcon":
-            invertMassiv(masiveSudoku, masAnimalsForChange);
-            sudokuCreater(masiveSudoku[0]);
-            createNumberBlock(masAnimalsForChange);
-            break;
-        case "fruitslsIcon":
-            invertMassiv(masiveSudoku, masFruitsForChange);
-            sudokuCreater(masiveSudoku[0]);
-            createNumberBlock(masFruitsForChange);
+            createNumberBlock(massive);
             break;
     }
-
 }
 
 function invertMassiv(mas, letterMassiv) {
@@ -298,19 +310,55 @@ document.addEventListener("click", function (e) {
         tempCell.textContent = "";
         mistake = false;
     }
+
+    if (e.target.id == "helpForPlayer") {
+        requestHelpForPlayer();
+        playerHelpCount--;
+        document.getElementById("countHelpForPlayer").textContent = playerHelpCount;
+        if (playerHelpCount < 1) {
+            document.getElementById("helpForPlayer").style.display = 'none';
+        }
+    }
+
     if (e.target.className == "cell_number_bottom" && tempCell != null && tempCell.textContent != "") {
         checkNumberForMatch(e.target);
     }
+
     if (e.target.className == "cell" || e.target.className == "cell_2") {
         if (tempCell != null && e.target != tempCell) { tempCell.style.backgroundColor = rootStyles.getPropertyValue('--color-main-cell'); }
         tempCell = e.target;
         checkNumberForMatch(tempCell);
     }
+
     if (e.target.className == "cell_number_bottom" && tempCell != null && tempCell.textContent == "") {
         tempCell.textContent = e.target.textContent;
         mistake = checkCorrectAnswer(tempCell, e.target);
     }
 })
+
+function requestHelpForPlayer() {
+    let tempMas = [];
+    masiveSudoku[0].forEach((row, rowIndex) => {
+        row.forEach((cell, columnIndex) => {
+            if (cell == 0) {
+                tempMas.push([masiveSudoku[1][rowIndex][columnIndex], [[rowIndex], [columnIndex]]]);
+            }
+        });
+    });
+    let min = Math.ceil(0);
+    let max = Math.floor(tempMas.length - 1);
+    let random = Math.floor(Math.random() * (max - min + 1) + min);
+    document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]).textContent = tempMas[random][0];
+    console.log(random, tempMas[random][0], tempMas[random][1][0][0], tempMas[random][1][1][0]);
+    checkCorrectAnswer(document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]),
+        document.getElementById(numberBlockGetId(tempMas[random][0]) + "cell_number_bottom"));
+    document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]).style.backgroundColor = rootStyles.getPropertyValue('--color-winner');
+    tempCell = document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]);
+}
+
+function numberBlockGetId(params) {
+    return playerSelectMassive.findIndex(ele => ele == params);
+}
 
 function checkCorrectAnswer(cell, number) {
     if (masiveSudoku[1][cell.getAttribute("ID_Cell")[0]][cell.getAttribute("ID_Cell")[1]] != cell.textContent) {
@@ -318,6 +366,7 @@ function checkCorrectAnswer(cell, number) {
         mistakeCount++;
         bonusMinute--;
         document.getElementById("showMistakeCount").textContent = mistakeCount;
+        mistakeControl();
         return true;
     } else {
         masiveSudoku[0][cell.getAttribute("ID_Cell")[0]][cell.getAttribute("ID_Cell")[1]] = cell.textContent;
@@ -396,6 +445,7 @@ function winnerIllumination() {
             document.getElementById(i + "" + j).style.backgroundColor = rootStyles.getPropertyValue('--color-winner');
         }
     }
+    document.getElementById("helpForPlayer").style.display = 'none';
     document.getElementById("winnerBlock").textContent = "Судоку собран. Поздравляю!";
     document.getElementById("winnerBlock").style.display = 'block';
     clearInterval(timerID);
@@ -408,37 +458,47 @@ function loseIllumination(text) {
             document.getElementById(i + "" + j).style.backgroundColor = rootStyles.getPropertyValue('--color-mistake');
         }
     }
+    document.getElementById("helpForPlayer").style.display = 'none';
     document.getElementById("winnerBlock").textContent = text;
     document.getElementById("winnerBlock").style.display = 'block';
 }
 
+function mistakeControl() {
+    if (mistakeCount > maxMistake) {
+        loseIllumination("Много ошибок. Попробуй ещё раз!");
+        clearInterval(timerID);
+    } else if (mistakeCount > 1 && playerHelpCount > 0) {
+        document.getElementById("countHelpForPlayer").textContent = playerHelpCount;
+        document.getElementById("helpForPlayer").style.display = 'block';
+    }
+}
 
-function timer(duration, display) {
+function timerDown(duration, display) {
     let timer = duration, minutes, seconds;
     let bonusTimeVisible = 0;
     timerID = setInterval(function () {
         if (bonusMinute > 0) {
             timer += bonusMinute * 60;
             document.getElementById("timeBonus").style.color = rootStyles.getPropertyValue('--color-text-winner');
-            document.getElementById("timeBonus").textContent = "+" + bonusMinute + "минута";
+            document.getElementById("timeBonus").textContent = "+" + bonusMinute + " минута";
             document.getElementById("timeBonus").style.display = 'block';
             bonusTimeVisible = 5;
             bonusMinute = 0;
         } else if (bonusMinute < 0) {
             timer += bonusMinute * 60;
             document.getElementById("timeBonus").style.color = rootStyles.getPropertyValue('--color-text-mistake');
-            document.getElementById("timeBonus").textContent = bonusMinute + "минута";
+            document.getElementById("timeBonus").textContent = bonusMinute + " минута";
             document.getElementById("timeBonus").style.display = 'block';
             bonusTimeVisible = 5;
             bonusMinute = 0;
         }
 
-        if(bonusTimeVisible > 0){
-            bonusTimeVisible --;
-        }else{
+        if (bonusTimeVisible > 0) {
+            bonusTimeVisible--;
+        } else {
             document.getElementById("timeBonus").style.display = 'none';
         }
-        
+
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
         minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -451,5 +511,25 @@ function timer(duration, display) {
             loseIllumination("Время вышло. Попробуй ещё раз!");
             display.textContent = "00" + ":" + "00";
         }
+    }, 1000);
+}
+
+function timerUp(display) {
+    let minutes = 0;
+    let seconds = 0;
+    let countMinutes = 0;
+    let countSeconds = 0;
+    timerID = setInterval(function () {
+        countSeconds++;
+        if (seconds == 59) {
+            minutes = parseInt(++countMinutes);
+            countSeconds = 0;
+        }
+        minutes = parseInt(minutes);
+        seconds = parseInt(countSeconds);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        display.textContent = minutes + ":" + seconds;
+
     }, 1000);
 }
