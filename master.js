@@ -137,7 +137,8 @@ let playerSelectMassive
 let checkWinner;
 let timerTime;
 let bonusMinute;
-let playerHelpCount;
+let playerHelpRandomCount;
+let playerSelectHelpCount;
 let masIntForChange = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 let masLatinLettersForChange = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 let masCyrillicLettersForChange = ['', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З'];
@@ -158,10 +159,10 @@ function timerSelector(params) {
     if (params <= 25) {
         timerTime = 60 * 5;
     } else if (params > 25 && params < 40) {
-        timerTime = 60 * 10;
+        timerTime = 60 * 7;
     } else if (params >= 40) {
-        timerTime = 60 * 15;
-    } else { timerTime = 60 * 12; }
+        timerTime = 60 * 10;
+    } else { timerTime = 60 * 10; }
 }
 
 function clickStartGame() {
@@ -171,7 +172,8 @@ function clickStartGame() {
     maxMistake = 3;
     checkWinner = 0;
     bonusMinute = 0;
-    playerHelpCount = 2;
+    playerHelpRandomCount = 1;
+    playerSelectHelpCount = 2;
     document.getElementById("winnerBlock").style.display = 'none';
     document.getElementById("timeBonus").style.display = 'none';
     document.getElementById("mistakeBlock").style.display = 'none';
@@ -194,6 +196,7 @@ function timeSelectOptions() {
     if (document.getElementById("radioTimeSelect").checked) {
         timerSelector(difficulty);
         timerDown(timerTime, document.getElementById("timerGame"));
+        maxMistake = 1000;
     }
     else {
         document.getElementById("mistakeBlock").style.display = 'block';
@@ -313,10 +316,19 @@ document.addEventListener("click", function (e) {
 
     if (e.target.id == "helpForPlayer") {
         requestHelpForPlayer();
-        playerHelpCount--;
-        document.getElementById("countHelpForPlayer").textContent = playerHelpCount;
-        if (playerHelpCount < 1) {
+        playerHelpRandomCount--;
+        document.getElementById("countHelpForPlayer").textContent = playerHelpRandomCount;
+        if (playerHelpRandomCount < 1) {
             document.getElementById("helpForPlayer").style.display = 'none';
+        }
+    }
+
+    if(e.target.id == "helpForPlayerSelect" && tempCell != null && tempCell.textContent == ""){
+        selectRequestHelpForPlayer();
+        playerSelectHelpCount--;
+        document.getElementById("countHelpForPlayerSelect").textContent = playerSelectHelpCount;
+        if (playerSelectHelpCount < 1) {
+            document.getElementById("helpForPlayerSelect").style.display = 'none';
         }
     }
 
@@ -349,11 +361,19 @@ function requestHelpForPlayer() {
     let max = Math.floor(tempMas.length - 1);
     let random = Math.floor(Math.random() * (max - min + 1) + min);
     document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]).textContent = tempMas[random][0];
-    console.log(random, tempMas[random][0], tempMas[random][1][0][0], tempMas[random][1][1][0]);
+    //console.log(random, tempMas[random][0], tempMas[random][1][0][0], tempMas[random][1][1][0]);
     checkCorrectAnswer(document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]),
         document.getElementById(numberBlockGetId(tempMas[random][0]) + "cell_number_bottom"));
     document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]).style.backgroundColor = rootStyles.getPropertyValue('--color-winner');
     tempCell = document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]);
+}
+
+function selectRequestHelpForPlayer() {
+    tempCell.textContent = masiveSudoku[1][tempCell.id[0]][tempCell.id[1]];
+    //console.log(masiveSudoku[1][tempCell.id[0]][tempCell.id[1]]);
+    checkCorrectAnswer(document.getElementById(tempCell.id[0] + "" + tempCell.id[1]),
+        document.getElementById(numberBlockGetId(masiveSudoku[1][tempCell.id[0]][tempCell.id[1]]) + "cell_number_bottom"));
+    tempCell.style.backgroundColor = rootStyles.getPropertyValue('--color-winner');
 }
 
 function numberBlockGetId(params) {
@@ -446,6 +466,7 @@ function winnerIllumination() {
         }
     }
     document.getElementById("helpForPlayer").style.display = 'none';
+    document.getElementById("helpForPlayerSelect").style.display = 'none';
     document.getElementById("winnerBlock").textContent = "Судоку собран. Поздравляю!";
     document.getElementById("winnerBlock").style.display = 'block';
     clearInterval(timerID);
@@ -459,6 +480,7 @@ function loseIllumination(text) {
         }
     }
     document.getElementById("helpForPlayer").style.display = 'none';
+    document.getElementById("helpForPlayerSelect").style.display = 'none';
     document.getElementById("winnerBlock").textContent = text;
     document.getElementById("winnerBlock").style.display = 'block';
 }
@@ -467,8 +489,13 @@ function mistakeControl() {
     if (mistakeCount > maxMistake) {
         loseIllumination("Много ошибок. Попробуй ещё раз!");
         clearInterval(timerID);
-    } else if (mistakeCount > 1 && playerHelpCount > 0) {
-        document.getElementById("countHelpForPlayer").textContent = playerHelpCount;
+    } 
+    if (mistakeCount > 1 && playerSelectHelpCount > 0) {
+        document.getElementById("countHelpForPlayerSelect").textContent = playerSelectHelpCount;
+        document.getElementById("helpForPlayerSelect").style.display = 'block';
+    }
+    if (mistakeCount > 1 && playerHelpRandomCount > 0) {
+        document.getElementById("countHelpForPlayer").textContent = playerHelpRandomCount;
         document.getElementById("helpForPlayer").style.display = 'block';
     }
 }
@@ -478,9 +505,9 @@ function timerDown(duration, display) {
     let bonusTimeVisible = 0;
     timerID = setInterval(function () {
         if (bonusMinute > 0) {
-            timer += bonusMinute * 60;
+            timer += bonusMinute * 30;
             document.getElementById("timeBonus").style.color = rootStyles.getPropertyValue('--color-text-winner');
-            document.getElementById("timeBonus").textContent = "+" + bonusMinute + " минута";
+            document.getElementById("timeBonus").textContent = "+" + bonusMinute * 30 + " секунд";
             document.getElementById("timeBonus").style.display = 'block';
             bonusTimeVisible = 5;
             bonusMinute = 0;
