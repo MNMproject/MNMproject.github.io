@@ -1,12 +1,12 @@
 :root{
-    --color-for-select:#d882ee;
+    --color-for-select:#d782ee;
     --color-mistake: red;
     --color-main-cell: white;
     --color-winner: #98FB98;
     --color-text-winner: #23b423;
     --color-text-mistake: rgb(225, 27, 27);
-    --color-button:#d05bed;
-    --color-shadow-button:#e8b7f8;
+    --color-button:#b75bed;
+    --color-shadow-button:#dfb7f8;
 }
 
 body{
@@ -48,7 +48,8 @@ body{
     width: 40px;
     height: 40px;
     display: grid;
-    grid-template-columns: 90% 10%;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 80% 20%;
     text-align: center;
 }
 
