@@ -136,6 +136,7 @@ let masQuantityAllNumbers;
 let playerSelectMassive
 let checkWinner;
 let timerTime;
+let timerID;
 let bonusMinute;
 let playerHelpRandomCount;
 let playerSelectHelpCount;
@@ -148,8 +149,6 @@ let masAnimalsForChange = ['', (String.fromCodePoint('128053')), (String.fromCod
 let masFruitsForChange = ['', (String.fromCodePoint('127817')), (String.fromCodePoint('127818')), (String.fromCodePoint('127819')),
     (String.fromCodePoint('127822')), (String.fromCodePoint('127826')), (String.fromCodePoint('127827')), (String.fromCodePoint('129373')),
     (String.fromCodePoint('129361')), (String.fromCodePoint('127824'))];
-let timerID;
-
 
 function checkCustomDifficulty() {
     difficulty = document.getElementById("customDifficulty").value;
@@ -174,10 +173,10 @@ function clickStartGame() {
     bonusMinute = 0;
     playerHelpRandomCount = 1;
     playerSelectHelpCount = 2;
+    setHelpForPlayer();
     document.getElementById("winnerBlock").style.display = 'none';
     document.getElementById("timeBonus").style.display = 'none';
     document.getElementById("mistakeBlock").style.display = 'none';
-    document.getElementById("helpForPlayer").style.display = 'none';
     sudoku = new Sudoku(size, difficulty);
     cleanCell("containerSudoku");
     cleanCell("blockNumber");
@@ -190,6 +189,13 @@ function clickStartGame() {
     document.getElementById("subokuBlock").style.display = 'block';
     clearInterval(timerID);
     timeSelectOptions();
+}
+
+function setHelpForPlayer() {
+    document.getElementById("countHelpForPlayerSelect").textContent = playerSelectHelpCount;
+    document.getElementById("helpForPlayerSelect").style.display = 'block';
+    document.getElementById("countHelpForPlayer").textContent = playerHelpRandomCount;
+    document.getElementById("helpForPlayer").style.display = 'block';
 }
 
 function timeSelectOptions() {
@@ -323,7 +329,7 @@ document.addEventListener("click", function (e) {
         }
     }
 
-    if(e.target.id == "helpForPlayerSelect" && tempCell != null && tempCell.textContent == ""){
+    if (e.target.id == "helpForPlayerSelect" && tempCell != null && tempCell.textContent == "") {
         selectRequestHelpForPlayer();
         playerSelectHelpCount--;
         document.getElementById("countHelpForPlayerSelect").textContent = playerSelectHelpCount;
@@ -361,7 +367,6 @@ function requestHelpForPlayer() {
     let max = Math.floor(tempMas.length - 1);
     let random = Math.floor(Math.random() * (max - min + 1) + min);
     document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]).textContent = tempMas[random][0];
-    //console.log(random, tempMas[random][0], tempMas[random][1][0][0], tempMas[random][1][1][0]);
     checkCorrectAnswer(document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]),
         document.getElementById(numberBlockGetId(tempMas[random][0]) + "cell_number_bottom"));
     document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]).style.backgroundColor = rootStyles.getPropertyValue('--color-winner');
@@ -370,7 +375,6 @@ function requestHelpForPlayer() {
 
 function selectRequestHelpForPlayer() {
     tempCell.textContent = masiveSudoku[1][tempCell.id[0]][tempCell.id[1]];
-    //console.log(masiveSudoku[1][tempCell.id[0]][tempCell.id[1]]);
     checkCorrectAnswer(document.getElementById(tempCell.id[0] + "" + tempCell.id[1]),
         document.getElementById(numberBlockGetId(masiveSudoku[1][tempCell.id[0]][tempCell.id[1]]) + "cell_number_bottom"));
     tempCell.style.backgroundColor = rootStyles.getPropertyValue('--color-winner');
@@ -489,14 +493,6 @@ function mistakeControl() {
     if (mistakeCount > maxMistake) {
         loseIllumination("Много ошибок. Попробуй ещё раз!");
         clearInterval(timerID);
-    } 
-    if (mistakeCount > 1 && playerSelectHelpCount > 0) {
-        document.getElementById("countHelpForPlayerSelect").textContent = playerSelectHelpCount;
-        document.getElementById("helpForPlayerSelect").style.display = 'block';
-    }
-    if (mistakeCount > 1 && playerHelpRandomCount > 0) {
-        document.getElementById("countHelpForPlayer").textContent = playerHelpRandomCount;
-        document.getElementById("helpForPlayer").style.display = 'block';
     }
 }
 
