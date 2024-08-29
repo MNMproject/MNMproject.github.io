@@ -72,6 +72,13 @@ input{
     align-items: center;
 }
 
+.numbersBlock{
+    width: 320px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
 .containerBlock {
     display: block; 
 }
@@ -92,10 +99,12 @@ input{
 }
 
 .cell {
+    display: grid;
     width: 35px;
     height: 35px;
     border: 1px solid black;
     text-align: center;
+    justify-content: center;
     line-height: 35px;
     box-sizing: border-box;
     font-size: 25px;
@@ -104,6 +113,7 @@ input{
 }
 
 .cell_2 {
+    display: grid;
     width: 35px;
     height: 35px;
     border-right: 1px solid black;
@@ -111,6 +121,7 @@ input{
     border-left: 5px solid black;
     border-bottom: 1px solid black;
     text-align: center;
+    justify-content: center;
     line-height: 35px;
     box-sizing: border-box;
     font-size: 25px;
@@ -125,10 +136,12 @@ input{
 }
 
 .cell_number_top {
+    display: grid;
     width: 30px;
     height: 20px;
     border: 1px solid black;
     text-align: center;
+    justify-content: center;
     line-height: 20px;
     box-sizing: border-box;
     font-size: 10px;
@@ -137,10 +150,12 @@ input{
 }
 
 .cell_number_bottom {
+    display: grid;
     width: 30px;
     height: 40px;
     border: 1px solid black;
     text-align: center;
+    justify-content: center;
     line-height: 40px;
     box-sizing: border-box;
     font-size: 25px;
