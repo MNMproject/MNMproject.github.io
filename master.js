@@ -193,9 +193,9 @@ function clickStartGame() {
 
 function setHelpForPlayer() {
     document.getElementById("countHelpForPlayerSelect").textContent = playerSelectHelpCount;
-    document.getElementById("helpForPlayerSelect").style.display = 'block';
+    document.getElementById("helpForPlayerSelect").style.display = 'grid';
     document.getElementById("countHelpForPlayer").textContent = playerHelpRandomCount;
-    document.getElementById("helpForPlayer").style.display = 'block';
+    document.getElementById("helpForPlayer").style.display = 'grid';
 }
 
 function timeSelectOptions() {
@@ -367,6 +367,7 @@ function requestHelpForPlayer() {
     let max = Math.floor(tempMas.length - 1);
     let random = Math.floor(Math.random() * (max - min + 1) + min);
     document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]).textContent = tempMas[random][0];
+    //console.log(random, tempMas[random][0], tempMas[random][1][0][0], tempMas[random][1][1][0]);
     checkCorrectAnswer(document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]),
         document.getElementById(numberBlockGetId(tempMas[random][0]) + "cell_number_bottom"));
     document.getElementById(tempMas[random][1][0][0] + "" + tempMas[random][1][1][0]).style.backgroundColor = rootStyles.getPropertyValue('--color-winner');
@@ -375,6 +376,7 @@ function requestHelpForPlayer() {
 
 function selectRequestHelpForPlayer() {
     tempCell.textContent = masiveSudoku[1][tempCell.id[0]][tempCell.id[1]];
+    //console.log(masiveSudoku[1][tempCell.id[0]][tempCell.id[1]]);
     checkCorrectAnswer(document.getElementById(tempCell.id[0] + "" + tempCell.id[1]),
         document.getElementById(numberBlockGetId(masiveSudoku[1][tempCell.id[0]][tempCell.id[1]]) + "cell_number_bottom"));
     tempCell.style.backgroundColor = rootStyles.getPropertyValue('--color-winner');
