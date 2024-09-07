@@ -473,7 +473,7 @@ function winnerIllumination() {
     }
     document.getElementById("helpForPlayer").style.display = 'none';
     document.getElementById("helpForPlayerSelect").style.display = 'none';
-    document.getElementById("winnerBlock").textContent = "Судоку собран. Поздравляю!";
+    document.getElementById("winnerBlock").textContent = "Судоку собрано. Поздравляю!";
     document.getElementById("winnerBlock").style.display = 'block';
     clearInterval(timerID);
 }
