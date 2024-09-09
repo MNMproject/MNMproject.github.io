@@ -10,73 +10,97 @@
 </head>
 
 <body>
-    <div class="settingsBlock">
-        <div class="topSettingsBlock">
-            <div>
-                <label for="sudokuSelector" class="containerForCenterBlock">Судоку</label>
-                <select id="sudokuSelector" style="border: none;">
-                    <option value="numbers" selected>Цифры</option>
-                    <option value="cyrillicLetters">Кириллица</option>
-                    <option value="latinLetters">Латинские Буквы</option>
-                    <option value="animalsIcon">Животные</option>
-                    <option value="fruitslsIcon">Фрукты</option>
-                </select>
-            </div>
-            <div>
-                <div class="containerForCenterBlock">Сложность</div>
-                <input id="customDifficulty" type="range" min="10" max="55" step="1" value="30"
-                    oninput="checkCustomDifficulty()">
+    <div class="headerBlock settingsBlock">
+        <div id="selectButtonSudoky" class="selectColorButton"  onclick="clickSelectButtonSudoky()">Судоку</div>
+        <div id="selectButtonAboutApp" onclick="clickSelectButtonAboutApp()">О приложении</div>
+    </div>
+    <div id="aboutAppMainView" style="display: none;">
+        <div class="settingsBlock">
+            <div style="margin: 10px; text-align:justify; font-family: arial;">
+                <p>Мы мечтаем, чтобы люди понимали друг друга независимо от физиологических ограничений!</p>
+                <p>Если хочешь услышать: нажми на кнопку <img src="screen_ear.jpeg" width="20px" height="20px">,
+                    и распознанный текст будет выведен на дисплей.</p>
+                <p>Если хочешь сказать: напиши текст и нажми на кнопку <img src="screen_mouth.jpeg" width="20px"
+                        height="20px">.
+                </p>
+                <p>Для быстрой коммуникации используй заготовленные шаблоны фраз, которые можно добавить заранее в
+                    разделе
+                    "Добавить категорию" <img src="screen_select_add.jpg" width="70px" height="20px">.</p>
+                <p>Функция "SOS" позволит срочно оповестить близких об экстренной ситуации <img src="screen_sos.jpg"
+                        width="70px" height="20px">.</p>
             </div>
         </div>
     </div>
-    <div class="settingsBlock">
-        <div class="bottomSettingsBlock">
-            <div>
-                <input id="radioTimeSelect" type="checkbox" />
-                Игра на время
+
+    <div id="sudokuMainView" >
+        <div class="settingsBlock">
+            <div class="topSettingsBlock">
+                <div>
+                    <label for="sudokuSelector" class="containerForCenterBlock">Судоку</label>
+                    <select id="sudokuSelector" style="border: none;">
+                        <option value="numbers" selected>Цифры</option>
+                        <option value="cyrillicLetters">Кириллица</option>
+                        <option value="latinLetters">Латинские Буквы</option>
+                        <option value="animalsIcon">Животные</option>
+                        <option value="fruitslsIcon">Фрукты</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="containerForCenterBlock">Сложность</div>
+                    <input id="customDifficulty" type="range" min="10" max="55" step="1" value="30"
+                        oninput="checkCustomDifficulty()">
+                </div>
             </div>
-            <button id="startGame" onclick="clickStartGame()">Начать новую игру</button>
         </div>
-    </div>
-    <div class="settingsBlock">
-        <div class="timeBlock">
-            <div id="mistakeBlock" style="display: none;">
-                <div class="containerForCenterBlock" style="gap: 5px;">
-                    <div>Ошибки</div>
-                    <div class="containerForCenterBlock">
-                        <div id="showMistakeCount"></div>
-                        <div>/</div>
-                        <div id="showMaxMistakeCount"></div>
+        <div class="settingsBlock">
+            <div class="bottomSettingsBlock">
+                <div>
+                    <input id="radioTimeSelect" type="checkbox" />
+                    Игра на время
+                </div>
+                <button id="startGame" onclick="clickStartGame()">Начать новую игру</button>
+            </div>
+        </div>
+        <div class="settingsBlock">
+            <div class="timeBlock">
+                <div id="mistakeBlock" style="display: none;">
+                    <div class="containerForCenterBlock" style="gap: 5px;">
+                        <div>Ошибки</div>
+                        <div class="containerForCenterBlock">
+                            <div id="showMistakeCount"></div>
+                            <div>/</div>
+                            <div id="showMaxMistakeCount"></div>
+                        </div>
                     </div>
                 </div>
+                <div id="timerGame"></div>
+                <div id="timeBonus"></div>
             </div>
-            <div id="timerGame"></div>
-            <div id="timeBonus"></div>
         </div>
-    </div>
-    <div class="containerForCenterBlock">
-        <div id="subokuBlock" style="display: none;" class="containerBlock">
-            <div class="containerSudoku" id="containerSudoku"></div>
-            <div id="blockNumber" class="numbersBlock"></div>
+        <div class="containerForCenterBlock">
+            <div id="subokuBlock" style="display: none;" class="containerBlock">
+                <div class="containerSudoku" id="containerSudoku"></div>
+                <div id="blockNumber" class="numbersBlock"></div>
+            </div>
         </div>
-    </div>
-    <div class="containerForCenterBlock">
-        <div id="winnerBlock" class="winner_text" style="display: none;"></div>
-    </div>
-    <div class="containerForCenterBlock">
-        <div class="bottomSettingsBlock">
-            <div id="helpForPlayer" style="display: none; justify-items: center;">
-                <div class="helpBlock">
-                    <span id="helpForPlayer" style="font-size: 30px;">&#128161</span>
-                    <div id="countHelpForPlayer" style="font-size: 10px;"></div>
-                    <div style="font-size: 10px;">Случайная ячейка</div>
+        <div class="containerForCenterBlock">
+            <div id="winnerBlock" class="winner_text" style="display: none;"></div>
+        </div>
+        <div class="containerForCenterBlock">
+            <div class="bottomSettingsBlock">
+                <div id="helpForPlayer" style="display: none; justify-items: center;">
+                    <div class="helpBlock">
+                        <span id="helpForPlayer" style="font-size: 30px;">&#128161</span>
+                        <div id="countHelpForPlayer" style="font-size: 10px;"></div>
+                        <div style="font-size: 10px;">Случайная ячейка</div>
+                    </div>
                 </div>
-            </div>
-            <div id="helpForPlayerSelect" style="display: none; justify-items: center;">
-                <div class="helpBlock">
-                    <span id="helpForPlayerSelect" style="font-size: 30px;">&#128161</span>
-                    <div id="countHelpForPlayerSelect" style="font-size: 10px;"></div>
-                    <div style="font-size: 10px;">Выбранная ячейка</div>
+                <div id="helpForPlayerSelect" style="display: none; justify-items: center;">
+                    <div class="helpBlock">
+                        <span id="helpForPlayerSelect" style="font-size: 30px;">&#128161</span>
+                        <div id="countHelpForPlayerSelect" style="font-size: 10px;"></div>
+                        <div style="font-size: 10px;">Выбранная ячейка</div>
+                    </div>
                 </div>
             </div>
         </div>
