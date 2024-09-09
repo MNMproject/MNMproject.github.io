@@ -14,9 +14,8 @@ body{
 }
 
 .headerBlock{
-    background: var(--color-for-select);
-    color: var(--color-main-cell);
-
+    background: var(--color-main-cell);
+    /*color: var(--color-main-cell);*/
 }
 
 /* применить стиль для всех дочерних элементов*/
@@ -28,6 +27,7 @@ body{
     border-radius: 10px;
     padding-inline:  10px;
     background-color: var(--color-button);
+    color: var(--color-main-cell);
 }
 
 .noneSelectColorButton{
