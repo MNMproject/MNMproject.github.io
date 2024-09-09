@@ -13,6 +13,33 @@ body{
     background-color: var(--color-main-cell);
 }
 
+.headerBlock{
+    background: var(--color-for-select);
+    color: var(--color-main-cell);
+
+}
+
+/* применить стиль для всех дочерних элементов*/
+.headerBlock > *{
+    margin: 5px;
+}
+
+.selectColorButton{
+    border-radius: 10px;
+    padding-inline:  10px;
+    background-color: var(--color-button);
+}
+
+.noneSelectColorButton{
+    border-radius: 10px;
+}
+
+/* применить стиль для всех дочерних элементов кроме последнего*/
+/* div > *:not(:last-child) {
+    display: block;
+    margin-bottom: 30px; 
+} */
+
 .settingsBlock{
     width: 98%;
     display: flex;
