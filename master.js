@@ -354,6 +354,21 @@ document.addEventListener("click", function (e) {
     }
 })
 
+
+function clickSelectButtonSudoky() {
+    document.getElementById("aboutAppMainView").style.display = 'none';
+    document.getElementById("sudokuMainView").style.display = 'block';
+    document.getElementById("selectButtonAboutApp").className = 'noneSelectColorButton';
+    document.getElementById("selectButtonSudoky").className = 'selectColorButton';
+}
+
+function clickSelectButtonAboutApp() {
+    document.getElementById("aboutAppMainView").style.display = 'block';
+    document.getElementById("sudokuMainView").style.display = 'none';
+    document.getElementById("selectButtonAboutApp").className = 'selectColorButton';
+    document.getElementById("selectButtonSudoky").className = 'noneSelectColorButton';
+}
+
 function requestHelpForPlayer() {
     let tempMas = [];
     masiveSudoku[0].forEach((row, rowIndex) => {
@@ -473,7 +488,7 @@ function winnerIllumination() {
     }
     document.getElementById("helpForPlayer").style.display = 'none';
     document.getElementById("helpForPlayerSelect").style.display = 'none';
-    document.getElementById("winnerBlock").textContent = "Судоку собрано. Поздравляю!";
+    document.getElementById("winnerBlock").textContent = "Судоку собран. Поздравляю!";
     document.getElementById("winnerBlock").style.display = 'block';
     clearInterval(timerID);
 }
@@ -496,6 +511,14 @@ function mistakeControl() {
         loseIllumination("Много ошибок. Попробуй ещё раз!");
         clearInterval(timerID);
     }
+    /*if (mistakeCount > 1 && playerSelectHelpCount > 0) {
+        document.getElementById("countHelpForPlayerSelect").textContent = playerSelectHelpCount;
+        document.getElementById("helpForPlayerSelect").style.display = 'block';
+    }
+    if (mistakeCount > 1 && playerHelpRandomCount > 0) {
+        document.getElementById("countHelpForPlayer").textContent = playerHelpRandomCount;
+        document.getElementById("helpForPlayer").style.display = 'block';
+    }*/
 }
 
 function timerDown(duration, display) {
