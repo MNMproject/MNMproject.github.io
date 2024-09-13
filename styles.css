@@ -1,0 +1,203 @@
+:root{
+    --color-for-select:#d782ee;
+    --color-mistake: red;
+    --color-main-cell: white;
+    --color-border-cell:#8b888dff;
+    --color-fatborder-cell:rgb(0, 0, 0);
+    --color-winner: #98FB98;
+    --color-text-winner: #23b423;
+    --color-text-mistake: rgb(225, 27, 27);
+    --color-button:#b75bed;
+    --color-shadow-button:#dfb7f8;
+}
+
+body{
+    background-color: var(--color-main-cell);
+}
+
+.headerBlock{
+    background: var(--color-main-cell);
+    /*color: var(--color-main-cell);*/
+}
+
+/* применить стиль для всех дочерних элементов*/
+.headerBlock > *{
+    margin: 5px;
+}
+
+.selectColorButton{
+    border-radius: 10px;
+    padding-inline:  10px;
+    background-color: var(--color-button);
+    color: var(--color-main-cell);
+}
+
+.noneSelectColorButton{
+    border-radius: 10px;
+}
+
+/* применить стиль для всех дочерних элементов кроме последнего*/
+/* div > *:not(:last-child) {
+    display: block;
+    margin-bottom: 30px; 
+} */
+
+.settingsBlock{
+    width: 98%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+}
+
+.topSettingsBlock{
+    width: 320px;
+    display: grid;
+    gap: 7px;
+    grid-template-columns: 50% 50%;
+}
+
+.bottomSettingsBlock{
+    width: 320px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.timeBlock{
+    width: 320px;
+    height: 15px;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    text-align: center;
+}
+
+.helpBlock{
+    width: 40px;
+    height: 40px;
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 80% 20%;
+    text-align: center;
+}
+
+button{
+    width: fit-content;
+    border: 0px;
+    border-radius: 5px;
+    color: var(--color-main-cell);
+    background-color: var(--color-button);
+    box-shadow: 0px 0px 1px 3px var(--color-shadow-button);
+}
+
+input{
+    accent-color: var(--color-button); 
+}
+
+.containerForCenterBlock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.numbersBlock{
+    width: 320px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.containerBlock {
+    display: block; 
+}
+
+.containerSudoku {
+    display: inline-flex;
+    flex-direction: column;
+    border: 3px solid var(--color-fatborder-cell);
+}
+
+.row {
+    display: flex;
+}
+
+.row_2 {
+    display: flex;
+    border-top: 3px solid var(--color-fatborder-cell);
+}
+
+.cell {
+    display: grid;
+    width: 35px;
+    height: 35px;
+    border: 1px solid var(--color-border-cell);
+    text-align: center;
+    justify-content: center;
+    line-height: 35px;
+    box-sizing: border-box;
+    font-size: 25px;
+    font-weight: 500;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.cell_2 {
+    display: grid;
+    width: 35px;
+    height: 35px;
+    border-right: 1px solid var(--color-border-cell);
+    border-top: 1px solid var(--color-border-cell);
+    border-left: 3px solid var(--color-fatborder-cell);
+    border-bottom: 1px solid var(--color-border-cell);
+    text-align: center;
+    justify-content: center;
+    line-height: 35px;
+    box-sizing: border-box;
+    font-size: 25px;
+    font-weight: 500;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.cell_number_block {
+    display: inline-grid;
+    margin-top: 10px;
+    margin-left: 5px;
+    border: 1px solid var(--color-fatborder-cell);
+    border-radius: 4px;
+}
+
+.cell_number_top {
+    display: grid;
+    width: 30px;
+    height: 20px;
+   
+    text-align: center;
+    justify-content: center;
+    line-height: 20px;
+    box-sizing: border-box;
+    font-size: 10px;
+    font-weight: 400;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.cell_number_bottom {
+    display: grid;
+    width: 30px;
+    height: 40px;
+    border-top: 1px solid var(--color-fatborder-cell);
+    border-radius: 0px 0px 4px 4px;
+    text-align: center;
+    justify-content: center;
+    line-height: 40px;
+    box-sizing: border-box;
+    font-size: 25px;
+    font-weight: 500;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: var(--color-for-select);
+}
+
+.winner_text{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+}
