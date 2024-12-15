@@ -16,10 +16,10 @@
 
 <body>
     <div class="headerBlock settingsBlock">
-        <div id="selectButtonSudoky" class="selectColorButton"  onclick="clickSelectButtonSudoky()">Судоку</div>
-        <div id="selectButtonAboutApp" onclick="clickSelectButtonAboutApp()">О приложении</div>
+        <div id="selectButtonAboutApp" class="selectColorButton" onclick="clickSelectButtonAboutApp()">О приложении</div>
+        <div id="selectButtonSudoky" onclick="clickSelectButtonSudoky()">Судоку</div>
     </div>
-    <div id="aboutAppMainView" style="display: none;">
+    <div id="aboutAppMainView" >
         <div class="settingsBlock">
             <div style="margin: 10px; text-align:justify; font-family: arial;">
                 <p>Мы мечтаем, чтобы люди понимали друг друга независимо от физиологических ограничений!</p>
@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <div id="sudokuMainView" >
+    <div id="sudokuMainView" style="display: none;">
         <div class="settingsBlock">
             <div class="topSettingsBlock">
                 <div>
