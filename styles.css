@@ -22,12 +22,12 @@ body{
 
 /* применить стиль для всех дочерних элементов*/
 .headerBlock > *{
-    margin: 4px;
+    margin: 0.4%;
 }
 
 .selectColorButton{
     border-radius: 10px;
-    padding-inline:  10px;
+    padding-inline:  1%;
     background-color: var(--color-button);
     color: var(--color-main-cell);
 }
@@ -47,35 +47,35 @@ body{
     display: flex;
     justify-content: center;
     text-align: center;
-    margin: 4px;
+    margin: 0.4%;
 }
 
 .topSettingsBlock{
-    width: 320px;
+    width: 32%;
     display: grid;
-    gap: 5px;
+    gap: 0.5%;
     grid-template-columns: 50% 50%;
 }
 
 .bottomSettingsBlock{
-    width: 320px;
+    width: 32%;
     display: grid;
     grid-template-columns: 50% 50%;
     text-align: center;
-    margin-top: 4px;
+    margin-top: 0.4%;
 }
 
 .timeBlock{
-    width: 320px;
-    height: 15px;
+    width: 32%;
+    height: 15%;
     display: grid;
     grid-template-columns: 33% 33% 33%;
     text-align: center;
 }
 
 .helpBlock{
-    width: 40px;
-    height: 40px;
+    width: 25%;
+    height: 70%;
     display: grid;
     grid-template-columns: 80% 20%;
     grid-template-rows: 80% 20%;
@@ -102,7 +102,7 @@ input{
 }
 
 .numbersBlock{
-    width: 320px;
+    width: 100%;
     display: flex;
     text-align: center;
     justify-content: center;
@@ -129,68 +129,72 @@ input{
 
 .cell {
     display: grid;
-    width: 35px;
-    height: 35px;
+    width: calc(2vw + 2vh);
+    height: calc(2vw + 2vh);
     border: 1px solid var(--color-border-cell);
     text-align: center;
     justify-content: center;
-    line-height: 35px;
+    align-content: center;
+    line-height: 100%;
     box-sizing: border-box;
-    font-size: 25px;
+    font-size: calc(1.5vw + 1.5vh);
     font-weight: 500;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .cell_2 {
     display: grid;
-    width: 35px;
-    height: 35px;
+    width: calc(2vw + 2vh);
+    height: calc(2vw + 2vh);
     border-right: 1px solid var(--color-border-cell);
     border-top: 1px solid var(--color-border-cell);
     border-left: 3px solid var(--color-fatborder-cell);
     border-bottom: 1px solid var(--color-border-cell);
     text-align: center;
     justify-content: center;
-    line-height: 35px;
+    align-content: center;
+    line-height: 100%;
     box-sizing: border-box;
-    font-size: 25px;
+    font-size: calc(1.5vw + 1.5vh);
     font-weight: 500;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .cell_number_block {
     display: inline-grid;
-    margin-top: 10px;
-    margin-left: 5px;
+    width: 100%;
+    height: 100%;
+    margin-top: 1%;
+    margin-left: 1.4%;
     border: 1px solid var(--color-fatborder-cell);
     border-radius: 4px;
 }
 
 .cell_number_top {
     display: grid;
-    width: 30px;
-    height: 20px;
+    width: 100%;
+    height: 100%;
    
     text-align: center;
     justify-content: center;
-    line-height: 20px;
+    line-height: 140%;
     box-sizing: border-box;
-    font-size: 10px;
+    font-size: 100%;
     font-weight: 400;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .cell_number_bottom {
     display: grid;
-    width: 30px;
-    height: 40px;
+    width: 100%;
+    height: 100%;
     border-top: 1px solid var(--color-fatborder-cell);
     border-radius: 0px 0px 4px 4px;
     text-align: center;
     justify-content: center;
-    line-height: 40px;
+    line-height: 200%;
     box-sizing: border-box;
-    font-size: 25px;
+    font-size: 120%;
     font-weight: 500;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: var(--color-for-select);
@@ -198,6 +202,6 @@ input{
 
 .winner_text{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 16px;
+    font-size: 100%;
     font-weight: 600;
 }
